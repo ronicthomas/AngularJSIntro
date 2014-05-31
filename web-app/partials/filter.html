@@ -1,0 +1,8 @@
+<div class="col-lg-6">
+    <ul class="list-group">
+        <li class="list-group-item" data-ng-repeat="number in numbers">
+            <span class="badge"> {{ number.phone }}</span>
+            {{ new Date() | dateFormat:"yyyy-mm-dd":true | search }}
+        </li>
+    </ul>
+</div>
