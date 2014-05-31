@@ -5,6 +5,7 @@ angularApp.config(function ($routeProvider) {
         .otherwise("/todo")
         .when('/', {redirectTo: '/todo/'})
         .when('/todo/', {templateUrl: '/partials/todo.html', controller: TodoCtrl})
+        .when('/info/', {templateUrl: '/partials/info.html', controller: UserController})
 });
 
 angularApp.filter('properCase', function () {
@@ -22,17 +23,30 @@ angularApp.filter('properCase', function () {
     }
 });
 
-function TodoCtrl($scope, $http) {
+angularApp.service('TodoService', function ($q, $http, $rootScope) {
+    // Defining Service function: getUsers which will load user list
+    $rootScope.currentUser = "Roni"
+    this.currentUser = "Roni";
+    this.list = function (url) {
+        var deferred = $q.defer();
+        $http.post(url, {}).success(function (data) {
+            deferred.resolve(data)
+        });
+        return deferred.promise;
+    };
+});
+
+function TodoCtrl($scope, $http, TodoService) {
     $scope.todo = {};
     $scope.todos = [];
+    $scope.currentUser = TodoService.currentUser;
 
-    $http.get('/todo/list').success(function (data) {
-        $scope.todos = data;
+    TodoService.list('/todo/list').then(function (data) {
+        $scope.todos = data
     });
 
     $scope.create = function (form) {
         if (form.$valid) {
-            console.log($scope.todo);
             $http.post('/todo/create', $scope.todo).success(function (data) {
                 $scope.todos.push($scope.todo);
                 $scope.todo = {};
@@ -54,4 +68,8 @@ function TodoCtrl($scope, $http) {
             $scope.todos[idx] = data;
         });
     };
+}
+
+function UserController($scope, TodoService) {
+    $scope.loggedInUser = TodoService.currentUser
 }

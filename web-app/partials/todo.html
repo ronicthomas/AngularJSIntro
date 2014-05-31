@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1>TODO's
+        <h1> {{ currentUser }} TODO's
             <small>A Blank Slate</small>
         </h1>
     </div>
@@ -27,19 +27,11 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <input name="task" class="form-control" placeholder="Enter text" data-ng-model="todo.task" ng-required="true">
-                        is valid: {{ createTodo.task.$valid }} <br/>
-                        is valid: {{ createTodo.task.$invalid }} <br/>
-                        is valid: {{ createTodo.task.$dirty }} <br/>
-                        is valid: {{ createTodo.task.$pristine }} <br/>
                     </div>
                     <input type="submit" class="btn btn-success" value="Create"/>
                     <span class="pull-right" ng-if="createTodo.$dirty && createTodo.$invalid"> All fields are mandatory</span>
                 </div>
             </div>
-
-            is dirty : {{ createTodo.$dirty}} <br/>
-            is valid : {{ createTodo.$valid}}
-
         </form>
     </div>
     <div class="col-lg-6">
