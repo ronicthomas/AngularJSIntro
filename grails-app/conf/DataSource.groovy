@@ -1,9 +1,9 @@
 dataSource {
     pooled = true
     jmxExport = true
-    driverClassName = "org.h2.Driver"
-    username = "sa"
-    password = ""
+    driverClassName = "com.mysql.jdbc.Driver"
+    username = "root"
+    password = "igdefault"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -18,7 +18,7 @@ environments {
     development {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "mysql://localhost/angular-todo?autoReconnect=true"
+            url = "jdbc:mysql://localhost/angular_todo?autoReconnect=true"
         }
     }
     test {
