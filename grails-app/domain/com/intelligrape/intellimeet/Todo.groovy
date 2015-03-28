@@ -1,5 +1,8 @@
 package com.intelligrape.intellimeet
 
+import grails.rest.Resource
+
+@Resource(uri = "/api/todo", formats = ['json', 'xml'])
 class Todo {
     String task
     Boolean completed = false
