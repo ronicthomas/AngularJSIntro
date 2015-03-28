@@ -8,13 +8,6 @@ class UrlMappings {
         }
 
         "/"(view:"/app")
-        "/index"(view:"/index")
-        "/controller"(view:"/controller")
-        "/demo"(view:"/demo")
-        "/routing"(view:"/routing")
-        "/filters"(view:"/filters")
-        "/directives"(view:"/directives")
-        "/ctrl-demo"(view:"/controller")
         "500"(view:'/error')
 	}
 }

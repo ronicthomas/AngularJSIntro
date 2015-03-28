@@ -1,20 +1,19 @@
 package com.intelligrape.intellimeet
 
-import grails.converters.JSON
-
 class Todo {
     String task
     Boolean completed = false
-    Date dateCreated
-    Date lastUpdated
+    Long dateCreated
+    Long lastUpdated
+    Priority priority = Priority.LOW
 
 //    static belongsTo = [collection: TodoGroup]
 
-    JSON toJSON(json) {
-        json.build {
-            task(task)
-            dateCreated(dateCreated)
-            completed(completed)
-        }
+    def beforeInsert = {
+        dateCreated = lastUpdated = new Date().time
+    }
+
+    def beforeUpdate = {
+        lastUpdated = new Date().time
     }
 }

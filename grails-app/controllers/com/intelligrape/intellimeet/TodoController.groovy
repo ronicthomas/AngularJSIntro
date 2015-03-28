@@ -9,15 +9,15 @@ class TodoController {
         render(todo as JSON)
     }
 
+    def show() {
+        Todo todo = Todo.read(request.JSON.id)
+        render(todo as JSON)
+    }
+
     def delete() {
         Todo todo = Todo.read(request.JSON.id)
         todo.delete(flush: true)
         render([status: 'success'] as JSON)
-    }
-
-    def fetch() {
-        Todo todo = Todo.read(params.id)
-        render(todo as JSON)
     }
 
     def update(Todo todo) {
