@@ -2,8 +2,6 @@ String mysqlUrl = System.getenv("DATABASE_URL")?:"mysql://root:igdefault@localho
 println ">>>>>> Got DATABASE_URL: ${mysqlUrl}"
 
 URI dbUri = new URI(mysqlUrl);
-username = dbUri.userInfo.split(":")[0]
-password = dbUri.userInfo.split(":")[1]
 
 String databaseUrl = "jdbc:${dbUri.scheme}://${dbUri.host}${dbUri.path}"
 if (dbUri.port > 0) {
@@ -13,14 +11,13 @@ if (dbUri.port > 0) {
 String query = dbUri.query ?: "reconnect=true"
 query += "&autoReconnect=true&useUnicode=yes&characterEncoding=UTF-8"
 databaseUrl += "?${query}"
-url = databaseUrl
 
 dataSource {
     pooled = true
     jmxExport = true
     driverClassName = "com.mysql.jdbc.Driver"
-    username = "root"
-    password = "igdefault"
+    username = dbUri.userInfo.split(":")[0]
+    password = dbUri.userInfo.split(":")[1]
     url = databaseUrl
 }
 hibernate {
