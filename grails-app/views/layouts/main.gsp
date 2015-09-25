@@ -20,7 +20,7 @@
     <g:layoutHead/>
 </head>
 
-<body>
+<body ng-app="myApp">
 
 <div id="wrapper">
 
