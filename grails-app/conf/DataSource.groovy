@@ -1,4 +1,4 @@
-String mysqlUrl = System.getenv("DATABASE_URL")?:"mysql://root:igdefault@localhost/intellimeet-todo"
+String mysqlUrl = System.getenv("DATABASE_URL")?:"mysql://root:igdefault@localhost/intellimeet_todo"
 println ">>>>>> Got DATABASE_URL: ${mysqlUrl}"
 
 URI dbUri = new URI(mysqlUrl);
