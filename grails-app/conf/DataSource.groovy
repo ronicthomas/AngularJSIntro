@@ -1,9 +1,27 @@
+String mysqlUrl = System.getenv("DATABASE_URL")?:"mysql://root:igdefault@localhost/intellimeet-todo"
+println ">>>>>> Got DATABASE_URL: ${mysqlUrl}"
+
+URI dbUri = new URI(mysqlUrl);
+username = dbUri.userInfo.split(":")[0]
+password = dbUri.userInfo.split(":")[1]
+
+String databaseUrl = "jdbc:${dbUri.scheme}://${dbUri.host}${dbUri.path}"
+if (dbUri.port > 0) {
+    databaseUrl += ":${dbUri.port}"
+}
+
+String query = dbUri.query ?: "reconnect=true"
+query += "&autoReconnect=true&useUnicode=yes&characterEncoding=UTF-8"
+databaseUrl += "?${query}"
+url = databaseUrl
+
 dataSource {
     pooled = true
     jmxExport = true
     driverClassName = "com.mysql.jdbc.Driver"
     username = "root"
     password = "igdefault"
+    url = databaseUrl
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -18,19 +36,16 @@ environments {
     development {
         dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost/angular_todo?autoReconnect=true"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                jmxEnabled = true
