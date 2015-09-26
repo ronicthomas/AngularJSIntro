@@ -5,10 +5,15 @@
 # ruby, etc.
 set -x
 VERSION=`awk -F'=' '/app.grails.version/ { print $2 }' $OPENSHIFT_REPO_DIR/application.properties | tr -d '\r\n'`
-curl get.sdkman.io | bash
-source "$OPENSHIFT_HOMEDIR/.sdkman/bin/sdkman-init.sh"
-yes | sdk install grails $VERSION
+export HOME=$OPENSHIFT_DATA_DIR
 
+if hash sdk 2>/dev/null; then
+	HOME=$OPENSHIFT_DATA_DIR
+	curl get.sdkman.io | bash
+	source "$HOME.sdkman/bin/sdkman-init.sh"
+	yes | sdk install grails $VERSION
+	HOME=$OPENSHIFT_HOMEDIR
+fi
 
 export JAVA_HOME=/etc/alternatives/java_sdk_1.7.0
 export JAVA_OPTS="$JAVA_OPTS -Divy.default.ivy.user.dir=$OPENSHIFT_DATA_DIR -Duser.home=$OPENSHIFT_DATA_DIR"
