@@ -5,14 +5,13 @@
 # ruby, etc.
 set -x
 VERSION=`awk -F'=' '/app.grails.version/ { print $2 }' $OPENSHIFT_REPO_DIR/application.properties | tr -d '\r\n'`
-export HOME=$OPENSHIFT_DATA_DIR
 
-if hash sdk 2>/dev/null; then
-	HOME=$OPENSHIFT_DATA_DIR
-	curl get.sdkman.io | bash
-	source "$HOME.sdkman/bin/sdkman-init.sh"
-	yes | sdk install grails $VERSION
-	HOME=$OPENSHIFT_HOMEDIR
+if [ ! -d $OPENSHIFT_DATA_DIR/grails-$VERSION ]; then
+   cd $OPENSHIFT_DATA_DIR
+   curl https://github.com/grails/grails-core/releases/download/v$VERSION/grails-$VERSION.zip
+   unzip grails-$VERSION.zip
+   export GRAILS_HOME=$OPENSHIFT_DATA_DIR/grails-$VERSION
+   export PATH=$GRAILS_HOME/bin:$PATH
 fi
 
 export JAVA_HOME=/etc/alternatives/java_sdk_1.7.0
