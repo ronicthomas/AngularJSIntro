@@ -8,7 +8,7 @@ VERSION=`awk -F'=' '/app.grails.version/ { print $2 }' $OPENSHIFT_REPO_DIR/appli
 
 if [ ! -d $OPENSHIFT_DATA_DIR/grails-$VERSION ]; then
    cd $OPENSHIFT_DATA_DIR
-   curl https://github.com/grails/grails-core/releases/download/v$VERSION/grails-$VERSION.zip
+   curl -L https://github.com/grails/grails-core/releases/download/v$VERSION/grails-$VERSION.zip
    unzip grails-$VERSION.zip
    export GRAILS_HOME=$OPENSHIFT_DATA_DIR/grails-$VERSION
    export PATH=$GRAILS_HOME/bin:$PATH
