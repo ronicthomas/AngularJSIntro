@@ -17,7 +17,6 @@ export PATH=$GRAILS_HOME/bin:$PATH
 export JAVA_HOME=/etc/alternatives/java_sdk_1.7.0
 export JAVA_OPTS="$JAVA_OPTS -Divy.default.ivy.user.dir=$OPENSHIFT_DATA_DIR -Duser.home=$OPENSHIFT_DATA_DIR"
 export HOME=$OPENSHIFT_DATA_DIR
-export DATABASE_URL="mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/"
 cd $OPENSHIFT_REPO_DIR
 rm -rf $OPENSHIFT_JBOSSEWS_DIR/webapps/ROOT*
 grails prod war $OPENSHIFT_JBOSSEWS_DIR/webapps/ROOT.war
